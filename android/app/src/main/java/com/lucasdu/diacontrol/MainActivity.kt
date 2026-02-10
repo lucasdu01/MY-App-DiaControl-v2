@@ -1,4 +1,4 @@
-package com.diacontrol2
+package com.lucasdu.diacontrol
 
 import android.os.Build
 import android.os.Bundle

@@ -1,7 +1,14 @@
 {
   "expo": {
-    "name": "diacontrol2",
-    "slug": "diacontrol2",
-    "version": "1.0.0"
+    "name": "diacontrol",
+    "slug": "diacontrol",
+    "scheme": "diacontrol",
+    "version": "2.0.0",
+    "plugins": [
+      "expo-router"
+    ],
+    "android": {
+      "package": "com.lucasdu.diacontrol"
+    }
   }
 }

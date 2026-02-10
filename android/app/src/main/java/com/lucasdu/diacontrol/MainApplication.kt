@@ -1,4 +1,4 @@
-package com.diacontrol2
+package com.lucasdu.diacontrol
 
 import android.app.Application
 import android.content.res.Configuration
