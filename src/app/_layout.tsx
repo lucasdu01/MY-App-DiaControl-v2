@@ -11,12 +11,16 @@ export default function Layout(){
           			fontWeight: "900",
 					fontSize: 30,
 				},
+				sceneStyle:{
+					backgroundColor: "#F5F5F5",
+				},
 				tabBarShowLabel: false,
 				tabBarStyle: {
 					backgroundColor: "#dddddd",
 					paddingTop: 10,
   					paddingBottom: 10
 				}
+				
       		}}
 		>
 			<Tabs.Screen

@@ -1,4 +1,4 @@
-import { Text, ScrollView, StyleSheet, View } from "react-native";
+import { Text, ScrollView } from "react-native";
 
 import { Card } from "@/components/Card"
 

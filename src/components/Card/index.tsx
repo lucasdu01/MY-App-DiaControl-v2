@@ -27,7 +27,7 @@ export function Card( {title, children}: Props ){
 				/>
 			</TouchableOpacity>
 			{isExpanded && (
-				<Text>{children}</Text>
+				<Text style={{fontSize: 16}}>{children}</Text>
 			)}
 		</ScrollView>
 	)
