@@ -9,10 +9,13 @@ export const styles = StyleSheet.create({
 		borderWidth: 4,
 		borderRadius: 10,		
 	},
+	headerCard: {
+		flexDirection: "row",
+		justifyContent: "space-between"
+	},
 	title: {
 		fontWeight: "bold",
 		color: "#316AC6",
 		fontSize: 24,
-		marginBottom: 10,
 	}
 })
