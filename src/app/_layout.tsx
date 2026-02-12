@@ -44,7 +44,7 @@ export default function Layout(){
 				name="glicemia"
 				options={{
 					headerTitle: "Glicemia Capilar",
-					tabBarIcon: ({ color }) => <MaterialIcons name="medical-information" size={30} color={ color } />
+					tabBarIcon: ({ color }) => <MaterialIcons name="water-drop" size={30} color={ color } />
 				}}
 			/>
 		</Tabs>

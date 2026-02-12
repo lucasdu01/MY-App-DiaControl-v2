@@ -1,20 +1,22 @@
-import { Text, ScrollView, View, TouchableOpacity } from "react-native"
+import { Text, ScrollView, View, TouchableOpacity, FlatList } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 import { useState } from "react"
 
 import { styles } from "./styles"
 import { ReactNode } from "react"
+import { Table } from "../Table"
 
 type Props = {
 	title: string
 	children: ReactNode
+	hasTable?: boolean
 }
 
-export function Card( {title, children}: Props ){
+export function Card( {title, children, hasTable=false}: Props ){
 	const [isExpanded, setIsExpanded] = useState(false)
 
 	return(
-		<ScrollView style={styles.container}>
+		<View style={styles.container}>
 			<TouchableOpacity 
 				style={styles.headerCard}
 				onPress={() => setIsExpanded(!isExpanded)}
@@ -27,8 +29,10 @@ export function Card( {title, children}: Props ){
 				/>
 			</TouchableOpacity>
 			{isExpanded && (
-				<Text style={{fontSize: 16}}>{children}</Text>
+				<View style={hasTable ? [styles.content, {margin:0}] : styles.content}>
+                    {children}
+                </View>
 			)}
-		</ScrollView>
+		</View>
 	)
 }

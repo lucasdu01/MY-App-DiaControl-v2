@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native"
 export const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "#FFFFFF",
-		padding: 15,
+		padding: 0,
 		marginHorizontal: 15,
 		borderColor: "#316AC6",
-		borderWidth: 4,
+		borderWidth: 2,
 		borderRadius: 10,
 
 		// --- Configuracao sombra para iOS ---
@@ -23,8 +23,12 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between"
 	},
 	title: {
-		fontWeight: "bold",
+		fontWeight: "500",
 		color: "#316AC6",
 		fontSize: 24,
+		margin: 10,
+	},
+	content: {
+		margin: 10,
 	}
 })
