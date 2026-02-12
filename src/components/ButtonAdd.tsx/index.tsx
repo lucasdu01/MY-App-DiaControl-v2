@@ -11,7 +11,7 @@ export function Button({ onCreate }: Props){
 	return(
 		<View style={ styles.container}>
 			<TouchableOpacity style={styles.buttonAdd} onPress={() => onCreate}>
-				<MaterialIcons name="add-circle" color="#FFFFFF" size={32}/>
+				<MaterialIcons name="add-circle" color="#FFFFFF" size={25}/>
 				<Text style={styles.label}>Adicionar Registro</Text>
 			</TouchableOpacity>
 		</View>
