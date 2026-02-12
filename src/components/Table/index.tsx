@@ -82,11 +82,11 @@ const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
 		<View style={styles.cell}>
 			<View style={styles.cellActions}>
 				<TouchableOpacity onPress={() => onEdit?.(item)}>
-					<MaterialIcons name="edit" size={15} color="#F4B400"/>
+					<MaterialIcons name="edit" size={20} color="#F4B400"/>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => onDelete?.(item)}>
-					<MaterialIcons name="delete" size={15} color="#E53935"/>
+					<MaterialIcons name="delete" size={20} color="#E53935"/>
 				</TouchableOpacity>	
 			</View>
 		</View>
