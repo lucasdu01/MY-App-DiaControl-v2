@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
 	},
 	headerCard: {
 		flexDirection: "row",
-		justifyContent: "space-between"
+		justifyContent: "space-between",
+		alignItems: "center",
 	},
 	title: {
 		fontWeight: "500",

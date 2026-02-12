@@ -2,6 +2,7 @@ import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView  } fr
 
 import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
+import { Button } from "../ButtonAdd.tsx";
 
 export interface GlicemiaItem {
 	id: string;
@@ -14,28 +15,32 @@ export interface GlicemiaItem {
 type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
+	handleCreate?: (item: GlicemiaItem) => void;
 	handleEdit?: (item: GlicemiaItem) => void;
   	handleDelete?: (item: GlicemiaItem) => void;
 }
 
-export function Table({ data, emptyMessage, handleEdit, handleDelete}: Props){
+export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDelete}: Props){
 	return(
-        <View style={styles.table}>
-            <TableHeader />
-            <ScrollView
-				style={{ maxHeight: 300 }}
-				nestedScrollEnabled={true}
-			>
-                {data.map((item) => (
-                    <TableRow
-                        key={item.id}
-                        item={item}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
-                    />
-                ))}
-            </ScrollView>
-        </View>
+		<>
+			<View style={styles.table}>
+				<TableHeader />
+				<ScrollView
+					style={{ maxHeight: 300 }}
+					nestedScrollEnabled={true}
+				>
+					{data.map((item) => (
+						<TableRow
+							key={item.id}
+							item={item}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
+						/>
+					))}
+				</ScrollView>
+			</View>
+			<Button onCreate={handleCreate}/>
+		</>
     )
 }
 
@@ -51,12 +56,11 @@ const TableHeader = () => (
 
 interface TableRowProps {
 	item: GlicemiaItem;
-	onView?: (item: GlicemiaItem) => void;
 	onEdit?: (item: GlicemiaItem) => void;
 	onDelete?: (item: GlicemiaItem) => void;
 }
 
-const TableRow = ({ item, onView, onEdit, onDelete}: TableRowProps) => (
+const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
 	<View style={styles.tableRow}>
 		
 		<View style={styles.cell}>

@@ -27,6 +27,9 @@ const dadosFicticios: GlicemiaItem[] = [
 ];
 
 export default function Glicemia(){
+	const handleCreate = (item: GlicemiaItem) => {
+		console.log("Criar");
+	}
 	const handleEdit = (item: GlicemiaItem) => {
    		console.log("Editar:", item);
     	//implementar a lógica de edição
@@ -42,6 +45,7 @@ export default function Glicemia(){
 			<Card title="Ao Acordar" hasTable>
 				<Table
 					data={dadosFicticios}
+					handleCreate={handleCreate}
 					handleEdit={handleEdit}
 					handleDelete={handleDelete}
 				/>
