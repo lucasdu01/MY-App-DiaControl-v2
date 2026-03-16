@@ -10,12 +10,13 @@ export interface GlicemiaItem {
 	hora: string;
 	valor: number;
 	observacao?: string;
+	periodo?: string;
 }
 
 type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
-	handleCreate?: (item: GlicemiaItem) => void;
+	handleCreate?: () => void;
 	handleEdit?: (item: GlicemiaItem) => void;
   	handleDelete?: (item: GlicemiaItem) => void;
 }

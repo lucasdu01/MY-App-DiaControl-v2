@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { FormRegistro } from "@/components/FormRegistros";
 import { Card } from "@/components/Card"
 import { Text, View, Button, ScrollView } from "react-native"
 
@@ -27,8 +29,15 @@ const dadosFicticios: GlicemiaItem[] = [
 ];
 
 export default function Glicemia(){
-	const handleCreate = (item: GlicemiaItem) => {
-		console.log("Criar");
+	const [modalVisible, setModalVisible] = useState(false);
+	const [periodoSelecionado, setPeriodoSelecionado] = useState("Ao Acordar");
+	const [registros, setRegistros] = useState<GlicemiaItem[]>(
+  		dadosFicticios.map((item) => ({ ...item, periodo: "Ao Acordar" }))
+	);
+
+	const handleCreate = (periodo: string) => {
+		setPeriodoSelecionado(periodo);
+		setModalVisible(true);
 	}
 	const handleEdit = (item: GlicemiaItem) => {
    		console.log("Editar:", item);
@@ -40,40 +49,100 @@ export default function Glicemia(){
     	// implementar a lógica de exclusão
   	};
 
+	const salvarRegistro = (item: GlicemiaItem) => {
+		setRegistros((anterior) => {
+    		const indice = anterior.findIndex((r) => r.id === item.id);
+    		if (indice >= 0) {
+				const copia = [...anterior];
+				copia[indice] = item;
+				return copia;
+    		}
+
+			return [item, ...anterior];
+		});
+	};
+
+	function filtrarRegistrosPorPeriodo(periodo: string) {
+		return registros.filter((registro) => registro.periodo === periodo);
+	}
+
 	return(
-		<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
-			<Card title="Ao Acordar" hasTable>
-				<Table
-					data={dadosFicticios}
-					handleCreate={handleCreate}
-					handleEdit={handleEdit}
-					handleDelete={handleDelete}
-				/>
-			</Card>
+		<>
+			<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
+				<Card title="Ao Acordar" hasTable>
+					<Table
+						data={filtrarRegistrosPorPeriodo("Ao Acordar")}
+						handleCreate={() => handleCreate("Ao Acordar")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Almoço (antes)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Almoço (antes)" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Almoço (antes)")}
+						handleCreate={() => handleCreate("Almoço (antes)")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Almoço (2h depois)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Almoço (2h depois)" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Almoço (2h depois)")}
+						handleCreate={() => handleCreate("Almoço (2h depois)")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Janta (antes)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Janta (antes)" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Janta (antes)")}
+						handleCreate={() => handleCreate("Janta (antes)")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Janta (2h depois)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Janta (2h depois)" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Janta (2h depois)")}
+						handleCreate={() => handleCreate("Janta (2h depois)")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Ao deitar" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Ao Deitar" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Ao Deitar")}
+						handleCreate={() => handleCreate("Ao Deitar")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
 
-			<Card title="Outros horários" hasTable >
-				asdasda
-			</Card>
-		</ScrollView>
+				<Card title="Outros horários" hasTable >
+					<Table
+						data={filtrarRegistrosPorPeriodo("Outros horários")}
+						handleCreate={() => handleCreate("Outros horários")}
+						handleEdit={handleEdit}
+						handleDelete={handleDelete}
+					/>
+				</Card>
+			</ScrollView>
+
+			<FormRegistro
+				visible={modalVisible}
+				periodoPreenchido={periodoSelecionado}
+				onClose={() => setModalVisible(false)}
+				onSave={(item) => {
+					salvarRegistro(item);
+					setModalVisible(false);
+				}}
+			/>
+		</>
+		
 	)
 }
