@@ -34,3 +34,36 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# iOS
+ios/build/
+ios/Pods/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.swiftpm/
+
+# Android
+android/build/
+android/gradle/wrapper/gradle-wrapper.jar
+android/.gradle/
+android/local.properties
+
+# EAS
+.eas/
+
+# Cache
+node_modules/.cache/
+.rn-cli.config.js
+
+# Sensitive
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
