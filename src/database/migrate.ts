@@ -10,6 +10,7 @@ export async function migrate(database: SQLiteDatabase) {
 			hora TEXT NOT NULL,							-- Hora no formato HH:MM
 			value FLOAT NOT NULL,						-- Valor da glicemia em mg
 			obs TEXT,									-- Observação opcional
+			periodo TEXT NOT NULL,						-- Período do dia (ex: Jejum, Pós-refeição, etc.)
 			created_at timestamp NOT NULL DEFAULT current_timestamp,	-- Salva data e hora da criação
 			updated_at timestamp NOT NULL DEFAULT current_timestamp -- Salva data e hora da atualização
 		);

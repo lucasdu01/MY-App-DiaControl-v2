@@ -9,7 +9,7 @@ type Props = {
     visible: boolean;
     periodoPreenchido: string;
     itemParaEditar?: GlicemiaItem;
-    onSave: (item:GlicemiaItem) => void;
+    onSave: (item:GlicemiaItem) => void | Promise<void>;
     onClose: () => void;
 }
 
@@ -47,7 +47,7 @@ export function FormRegistro({ visible, periodoPreenchido, itemParaEditar, onSav
         }
     }, [visible, itemParaEditar, periodoPreenchido]);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if(!formData.data || !formData.hora || !formData.valor  || !formData.periodo){
             Alert.alert("Atenção", "Preencha todos os campos obrigatórios.");
             return;

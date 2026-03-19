@@ -1,39 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormRegistro } from "@/components/FormRegistros";
 import { Card } from "@/components/Card"
 import { Text, View, Button, ScrollView } from "react-native"
+import { useSQLiteContext} from "expo-sqlite";
 
 import { Table, GlicemiaItem } from "../components/Table";
-const dadosFicticios: GlicemiaItem[] = [
-  { id: "1", data: "10/02/26", hora: "08:00", valor: 95, observacao: "Em jejum" },
-  { id: "2", data: "10/02/26", hora: "12:30", valor: 140 },
-  { id: "3", data: "10/02/26", hora: "19:00", valor: 110 },
-  { id: "4", data: "11/02/26", hora: "07:45", valor: 88 },
-  { id: "5", data: "11/02/26", hora: "13:00", valor: 165, observacao: "Após almoço" },
-  { id: "6", data: "11/02/26", hora: "22:30", valor: 102 },
-  { id: "7", data: "12/02/26", hora: "08:15", valor: 92 },
-  { id: "8", data: "12/02/26", hora: "12:00", valor: 135 },
-  { id: "9", data: "12/02/26", hora: "20:00", valor: 118 },
-  { id: "10", data: "13/02/26", hora: "07:30", valor: 85, observacao: "Acordei bem" },
-  { id: "11", data: "13/02/26", hora: "13:15", valor: 152 },
-  { id: "12", data: "13/02/26", hora: "19:30", valor: 125 },
-  { id: "13", data: "14/02/26", hora: "08:00", valor: 98 },
-  { id: "14", data: "14/02/26", hora: "12:45", valor: 145 },
-  { id: "15", data: "14/02/26", hora: "21:00", valor: 115 },
-  { id: "16", data: "15/02/26", hora: "07:50", valor: 90 },
-  { id: "17", data: "15/02/26", hora: "13:00", valor: 160, observacao: "Pizza" },
-  { id: "18", data: "15/02/26", hora: "19:15", valor: 122 },
-  { id: "19", data: "16/02/26", hora: "08:10", valor: 94 },
-  { id: "20", data: "16/02/26", hora: "12:30", valor: 138 },
-  
-];
 
 export default function Glicemia(){
 	const [modalVisible, setModalVisible] = useState(false);
 	const [periodoSelecionado, setPeriodoSelecionado] = useState("Ao Acordar");
-	const [registros, setRegistros] = useState<GlicemiaItem[]>(
-  		dadosFicticios.map((item) => ({ ...item, periodo: "Ao Acordar" }))
-	);
+	const [registros, setRegistros] = useState<GlicemiaItem[]>([]);
+
+	const db = useSQLiteContext();
+
+	async function carregarRegistros(){
+		try {
+			const rows = await db.getAllAsync<{
+				id: number;
+				data: string;
+				hora: string;
+				valor: number;
+				observacao: string | null;
+				periodo: string;
+			}>(
+				'SELECT id, data, hora, "value" AS valor, "obs" AS observacao, "periodo" FROM registros ORDER BY created_at DESC'
+			);
+			const itens: GlicemiaItem[] = rows.map((row) => ({
+				id: String(row.id),
+				data: row.data,
+				hora: row.hora,
+				valor: row.valor,
+				observacao: row.observacao ?? undefined,
+				periodo: row.periodo,
+			}));
+
+			setRegistros(itens);
+		} catch (error) {
+			console.error("Erro ao carregar registros:", error);
+		}
+	}
+
+	async function salvarRegistroNoBanco(item: GlicemiaItem) {
+		await db.runAsync(
+			'INSERT INTO registros (data, hora, "value", "obs", periodo) VALUES (?, ?, ?, ?, ?)',
+			[item.data, item.hora, item.valor, item.observacao ?? null, item.periodo ?? periodoSelecionado]
+		);
+	}
+
+	useEffect(() => {
+		carregarRegistros();
+	}, [db]);
+
 
 	const handleCreate = (periodo: string) => {
 		setPeriodoSelecionado(periodo);
@@ -48,19 +65,6 @@ export default function Glicemia(){
     	console.log("Deletar:", item);
     	// implementar a lógica de exclusão
   	};
-
-	const salvarRegistro = (item: GlicemiaItem) => {
-		setRegistros((anterior) => {
-    		const indice = anterior.findIndex((r) => r.id === item.id);
-    		if (indice >= 0) {
-				const copia = [...anterior];
-				copia[indice] = item;
-				return copia;
-    		}
-
-			return [item, ...anterior];
-		});
-	};
 
 	function filtrarRegistrosPorPeriodo(periodo: string) {
 		return registros.filter((registro) => registro.periodo === periodo);
@@ -137,8 +141,9 @@ export default function Glicemia(){
 				visible={modalVisible}
 				periodoPreenchido={periodoSelecionado}
 				onClose={() => setModalVisible(false)}
-				onSave={(item) => {
-					salvarRegistro(item);
+				onSave={async (item) => {
+					await salvarRegistroNoBanco(item);
+					await carregarRegistros();
 					setModalVisible(false);
 				}}
 			/>
