@@ -4,6 +4,7 @@ import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button } from "../ButtonAdd.tsx";
 
+// tipagem do item de glicemia
 export interface GlicemiaItem {
 	id: string;
 	data: string;
@@ -12,6 +13,7 @@ export interface GlicemiaItem {
 	observacao?: string;
 }
 
+// tipagem das props do componente Table
 type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
@@ -20,6 +22,7 @@ type Props = {
   	handleDelete?: (item: GlicemiaItem) => void;
 }
 
+// Componente de tabela para exibir os registros de glicemia
 export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDelete}: Props){
 	return(
 		<>
@@ -27,8 +30,11 @@ export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDele
 				<TableHeader />
 				<ScrollView
 					style={{ maxHeight: 300 }}
-					nestedScrollEnabled={true}
+					nestedScrollEnabled
+					showsVerticalScrollIndicator
+					persistentScrollbar
 				>
+					{/* Conteúdo da tabela */}
 					{data.map((item) => (
 						<TableRow
 							key={item.id}
@@ -44,6 +50,7 @@ export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDele
     )
 }
 
+// Componente para renderizar o cabeçalho da tabela
 const TableHeader = () => (
 	<View style={styles.tableHeader}>
 		<Text style={styles.headerCell}>Data</Text>
@@ -54,15 +61,17 @@ const TableHeader = () => (
 	</View>
 )
 
+// tipagem das props do componente TableRow
 interface TableRowProps {
 	item: GlicemiaItem;
-	onEdit?: (item: GlicemiaItem) => void;
-	onDelete?: (item: GlicemiaItem) => void;
+	onEdit: (item: GlicemiaItem) => void;		// onEdit é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para editar um registro de glicemia.
+	onDelete: (item: GlicemiaItem) => void;		// onDelete é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para excluir um registro de glicemia.
 }
 
+// Componente para renderizar cada linha da tabela, representando um registro de glicemia
 const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
 	<View style={styles.tableRow}>
-		
+		{ /* Cada célula da linha exibe um campo do item de glicemia, como data, hora, valor e observação. O estilo das células é definido pelo arquivo styles.ts. */ }
 		<View style={styles.cell}>
 			<Text style={styles.cellText}>{item.data}</Text>
 		</View>
@@ -80,6 +89,7 @@ const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
 		</View>
 
 		<View style={styles.cell}>
+			{ /* Botões de ação para editar e excluir o registro de glicemia. As funções onEdit e onDelete são chamadas quando os botões são pressionados, passando o item correspondente como argumento. */ }
 			<View style={styles.cellActions}>
 				<TouchableOpacity onPress={() => onEdit?.(item)}>
 					<MaterialIcons name="edit" size={20} color="#F4B400"/>

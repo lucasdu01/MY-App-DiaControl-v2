@@ -1,6 +1,7 @@
 import { ScrollView, Text } from "react-native";
 import { Card } from "@/components/Card"
 
+// Componente principal da tela de informações
 export default function Info(){
 	return(
 		<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>

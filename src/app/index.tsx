@@ -1,7 +1,7 @@
 import { Text, ScrollView } from "react-native";
-
 import { Card } from "@/components/Card"
 
+// Componente principal da tela inicial
 export default function Index(){
 	return(
 		<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>

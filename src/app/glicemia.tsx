@@ -1,7 +1,7 @@
 import { Card } from "@/components/Card"
-import { Text, View, Button, ScrollView } from "react-native"
-
+import { Text, ScrollView } from "react-native"
 import { Table, GlicemiaItem } from "../components/Table";
+
 const dadosFicticios: GlicemiaItem[] = [
   { id: "1", data: "10/02/26", hora: "08:00", valor: 95, observacao: "Em jejum" },
   { id: "2", data: "10/02/26", hora: "12:30", valor: 140 },
@@ -26,7 +26,9 @@ const dadosFicticios: GlicemiaItem[] = [
   
 ];
 
+// Componente principal da tela de glicemia
 export default function Glicemia(){
+	// Funções para lidar com criação, edição e exclusão de registros
 	const handleCreate = (item: GlicemiaItem) => {
 		console.log("Criar");
 	}
@@ -44,10 +46,10 @@ export default function Glicemia(){
 		<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
 			<Card title="Ao Acordar" hasTable>
 				<Table
-					data={dadosFicticios}
-					handleCreate={handleCreate}
-					handleEdit={handleEdit}
-					handleDelete={handleDelete}
+					data={dadosFicticios}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
+					handleCreate={handleCreate}			// handleCreate é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser criar um novo registro de glicemia
+					handleEdit={handleEdit}				// handleEdit é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser editar um registro existente
+					handleDelete={handleDelete}			// handleDelete é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser excluir um registro
 				/>
 			</Card>
 
@@ -67,12 +69,12 @@ export default function Glicemia(){
 				<Text>asdasda</Text>
 			</Card>
 
-			<Card title="Ao deitar" hasTable >
+			<Card title="Ao Deitar" hasTable >
 				<Text>asdasda</Text>
 			</Card>
 
 			<Card title="Outros horários" hasTable >
-				asdasda
+				<Text>asdasda</Text>
 			</Card>
 		</ScrollView>
 	)

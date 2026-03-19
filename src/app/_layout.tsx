@@ -1,9 +1,10 @@
 import { Tabs } from "expo-router"
 import { MaterialIcons } from "@expo/vector-icons"
-import { Text } from "react-native"
 
+// Componente de layout principal que define a estrutura de navegação do aplicativo
 export default function Layout(){
 	return (
+		// Configuração das abas de navegação
 		<Tabs
 			screenOptions={{
         		headerTintColor: "#316AC6",
@@ -23,10 +24,11 @@ export default function Layout(){
 				
       		}}
 		>
+			{/* Configuração das telas de navegação */}
 			<Tabs.Screen
-				name="info"
+				name="info"							// Nome da tela para navegação
 				options={{
-					headerTitle: "Informações",
+					headerTitle: "Informações",		// Título exibido no cabeçalho da tela
 					tabBarIcon: ({ color }) => <MaterialIcons name="info" size={30} color={ color } />
 					
 				}}
