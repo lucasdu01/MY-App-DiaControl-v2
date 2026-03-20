@@ -22,7 +22,7 @@ export function ModalAdd( {modalAddVisible, closeModalAdd} : Props) {
                     <View style={styles.headerForm}>
                         <Text style={styles.title}>Adicionar Registro</Text>
                         <TouchableOpacity onPress={() => closeModalAdd()}>
-                            <MaterialIcons name="close" size={32} style={styles.closeButton} />
+                            <MaterialIcons name="close" size={32} style={styles.buttonClose} />
                         </TouchableOpacity>
                     </View>
                     <TextInput style={styles.input} placeholder="Período" />

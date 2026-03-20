@@ -20,11 +20,11 @@ export function ModalDelete({ modalDeleteVisible, closeModalDelete } : Props) {
                     <View style={styles.headerForm}>
                         <Text style={styles.title}>Remover Registro</Text>
                         <TouchableOpacity onPress={() => closeModalDelete()}>
-                            <MaterialIcons name="close" size={32} style={styles.closeButton} />
+                            <MaterialIcons name="close" size={32} style={styles.buttonClose} />
                         </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.msgConfirm}>Tem certeza que deseja remover este registro? </Text>
+                    <Text style={styles.txtMsgConfirmDelete}>Tem certeza que deseja remover este registro? </Text>
 
                     <TextInput style={styles.input} placeholder="Período" editable={false} />
                     <TextInput style={styles.input} placeholder="Data" editable={false} />

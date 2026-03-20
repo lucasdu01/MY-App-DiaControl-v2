@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 20,
    },
-   closeButton: {
+   buttonClose: {
         position: 'absolute',
         right: -65,
         top: -5,
@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
    title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 20,
    },
    input: {
         width: '100%',
@@ -40,7 +39,7 @@ export const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 5,
-        paddingHorizontal: 10,
+        padding: 10,
         marginBottom: 15,
    },
    buttonsGroup: {
