@@ -1,8 +1,10 @@
 import { Card } from "@/components/Card"
 import { Text, ScrollView, Modal } from "react-native"
 import { Table, GlicemiaItem } from "../components/Table";
-import { useState } from "react";
-import { FormRegistro } from "@/components/FormRegistro";
+import { useGlicemiaModals } from "@/features/glicemia/hooks/hooks";
+import { ModalAdd } from "@/features/glicemia/modals/ModalAdd";
+//import { ModalEdit } from "@/features/glicemia/modals/ModalEdit";
+import { ModalDelete } from "@/features/glicemia/modals/ModalDelete";
 
 const dadosFicticios: GlicemiaItem[] = [
   { id: "1", data: "10/02/26", hora: "08:00", valor: 95, observacao: "Em jejum" },
@@ -30,68 +32,52 @@ const dadosFicticios: GlicemiaItem[] = [
 
 // Componente principal da tela de glicemia
 export default function Glicemia(){
-	const [modalVisible, setModalVisible] = useState(false);	// estado para controlar a visibilidade do modal de registro de glicemia
-	// Funções para lidar com criação, edição e exclusão de registros
-	const handleCreate = (item: GlicemiaItem) => {
-		console.log("Criar");
-		setModalVisible(true);	// abrir o modal para criar um novo registro
-	}
-	const handleEdit = (item: GlicemiaItem) => {
-   		console.log("Editar:", item);
-    	//implementar a lógica de edição
-  	};
-
-  	const handleDelete = (item: GlicemiaItem) => {
-    	console.log("Deletar:", item);
-    	// implementar a lógica de exclusão
-  	};
+	const { modalAddVisible, openModalAdd, closeModalAdd } = useGlicemiaModals();
+	const { modalEditVisible, openModalEdit, closeModalEdit } = useGlicemiaModals();
+	const { modalDeleteVisible, openModalDelete, closeModalDelete } = useGlicemiaModals();
 
 	return(
-		
-		<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
-			<Card title="Ao Acordar" hasTable>
-				<Table
-					data={dadosFicticios}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
-					openModalAdd={() => setModalVisible(true)}
-					handleEdit={handleEdit}				// handleEdit é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser editar um registro existente
-					handleDelete={handleDelete}			// handleDelete é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser excluir um registro
-				/>
-			</Card>
+		<>
+			<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
+				<Card title="Ao Acordar" hasTable>
+					<Table
+						data={dadosFicticios}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
+						openModalAdd={openModalAdd}
+						openModalEdit={openModalEdit}
+						openModalDelete={openModalDelete}
+						emptyMessage="Nenhum registro encontrado"	// emptyMessage é uma string opcional passada como prop para o componente Table, que será exibida quando não houver registros de glicemia para mostrar na tabela
+					/>
+				</Card>
 
-			<Card title="Almoço (antes)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Almoço (antes)" hasTable >
+					<Text>asdasda</Text>
+				</Card>
 
-			<Card title="Almoço (2h depois)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Almoço (2h depois)" hasTable >
+					<Text>asdasda</Text>
+				</Card>
 
-			<Card title="Janta (antes)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Janta (antes)" hasTable >
+					<Text>asdasda</Text>
+				</Card>
 
-			<Card title="Janta (2h depois)" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Janta (2h depois)" hasTable >
+					<Text>asdasda</Text>
+				</Card>
 
-			<Card title="Ao Deitar" hasTable >
-				<Text>asdasda</Text>
-			</Card>
+				<Card title="Ao Deitar" hasTable >
+					<Text>asdasda</Text>
+				</Card>
 
-			<Card title="Outros horários" hasTable >
-				<Text>asdasda</Text>
-			</Card>
-			<Modal
-				animationType='fade'
-				transparent={true}
-				visible={modalVisible}
-				onRequestClose={() => setModalVisible(false)}
-			>
-				<FormRegistro
-					handleCreate={handleCreate}			// handleCreate é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser criar um novo registro de glicemia 
-					closeModal={() => setModalVisible(false)}
-				/>
-			</Modal>
-		</ScrollView>
+				<Card title="Outros horários" hasTable >
+					<Text>asdasda</Text>
+				</Card>
+			</ScrollView>
+
+			{/* Renderiza os modais */}
+			<ModalAdd modalAddVisible={modalAddVisible} closeModalAdd={closeModalAdd}/>
+			{/* <ModalEdit modalEditVisible={modalEditVisible} closeModalEdit={closeModalEdit}/> */}
+			<ModalDelete modalDeleteVisible={modalDeleteVisible} closeModalDelete={closeModalDelete}/>
+		</>		
 	)
 }
