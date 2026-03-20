@@ -3,8 +3,7 @@ import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView, Moda
 import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
 import { ButtonAdd  } from "../ButtonAdd.tsx";
-import { useState } from "react";
-import { ModalDelete } from "../ModalDelete";
+import { useGlicemiaModals } from "@/features/glicemia/hooks/hooks";
 
 // tipagem do item de glicemia
 export interface GlicemiaItem {
@@ -20,15 +19,14 @@ type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
 	openModalAdd: () => void;
-	handleCreate?: (item: GlicemiaItem) => void;
-	handleEdit?: (item: GlicemiaItem) => void;
-  	handleDelete?: (item: GlicemiaItem) => void;
+	openModalEdit: () => void;
+	openModalDelete: () => void;
+
 }
 
 
 // Componente de tabela para exibir os registros de glicemia
-export function Table({ data, emptyMessage, openModalAdd, handleCreate, handleEdit, handleDelete}: Props){
-	const [modalDeleteVisible, setModalDeleteVisible] = useState(false);	// estado para controlar a visibilidade do modal de confirmação de exclusão
+export function Table({ data, emptyMessage, openModalAdd, openModalEdit, openModalDelete }: Props){
 	return(
 		<>
 			<View style={styles.table}>
@@ -44,26 +42,13 @@ export function Table({ data, emptyMessage, openModalAdd, handleCreate, handleEd
 						<TableRow
 							key={item.id}
 							item={item}
-							onEdit={handleEdit}
-							onDelete={handleDelete}
-							openModalDelete={() => setModalDeleteVisible(true)}
+							openModalDelete={openModalDelete}
+							openModalEdit={openModalEdit}
 						/>
 					))}
 				</ScrollView>
 			</View>
 			<ButtonAdd 	onPress={openModalAdd}/>
-
-			<Modal
-				animationType='fade'
-				transparent={true}
-				visible={modalDeleteVisible}
-				onRequestClose={() => setModalDeleteVisible(false)}
-			>
-					<ModalDelete
-						handleDelete={handleDelete}			// handleCreate é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser criar um novo registro de glicemia 
-						closeModal={() => setModalDeleteVisible(false)}
-				/>
-			</Modal>
 		</>
     )
 }
@@ -82,13 +67,12 @@ const TableHeader = () => (
 // tipagem das props do componente TableRow
 interface TableRowProps {
 	item: GlicemiaItem;
-	onEdit: (item: GlicemiaItem) => void;		// onEdit é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para editar um registro de glicemia.
-	onDelete: (item: GlicemiaItem) => void;		// onDelete é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para excluir um registro de glicemia.
+	openModalEdit: () => void;				// openModalEdit é uma função que retorna void. Essa função será chamada para abrir o modal de edição quando o usuário clicar no botão para editar um registro de glicemia.
 	openModalDelete: () => void;				// openModalDelete é uma função que retorna void. Essa função será chamada para abrir o modal de confirmação de exclusão quando o usuário clicar no botão para excluir um registro de glicemia.
 }
 
 // Componente para renderizar cada linha da tabela, representando um registro de glicemia
-const TableRow = ({ item, onEdit, openModalDelete, onDelete}: TableRowProps) => (
+const TableRow = ({ item, openModalEdit, openModalDelete}: TableRowProps) => (
 	<View style={styles.tableRow}>
 		{ /* Cada célula da linha exibe um campo do item de glicemia, como data, hora, valor e observação. O estilo das células é definido pelo arquivo styles.ts. */ }
 		<View style={styles.cell}>
@@ -110,7 +94,7 @@ const TableRow = ({ item, onEdit, openModalDelete, onDelete}: TableRowProps) => 
 		<View style={styles.cell}>
 			{ /* Botões de ação para editar e excluir o registro de glicemia. As funções onEdit e onDelete são chamadas quando os botões são pressionados, passando o item correspondente como argumento. */ }
 			<View style={styles.cellActions}>
-				<TouchableOpacity onPress={() => onEdit?.(item)}>
+				<TouchableOpacity onPress={() => openModalEdit()}>
 					<MaterialIcons name="edit" size={20} color="#F4B400"/>
 				</TouchableOpacity>
 
