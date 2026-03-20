@@ -2,9 +2,11 @@ import { View, Text, TextInput, Button, TouchableOpacity, Modal } from 'react-na
 import { styles } from './styles'
 import { MaterialIcons } from '@expo/vector-icons'
 
+import { SelectPeriodo } from '@/components/Inputs/SelectPeriodo'
 import { InputData } from '@/components/Inputs/InputData'
 import { InputHora } from '@/components/Inputs/InputHora'
-import { SelectPeriodo } from '@/components/Inputs/SelectPeriodo'
+import { InputNumber } from '@/components/Inputs/InputNumber'
+
 
 type Props = {
     modalAddVisible: boolean;	// estado que controla a visibilidade do modal de registro de glicemia
@@ -32,11 +34,20 @@ export function ModalAdd( {modalAddVisible, closeModalAdd} : Props) {
                     </View>
 
                     <View style={styles.inputsGroup}>
+                        <Text style={styles.label}>Periodo</Text>
                         <SelectPeriodo/>
+
+                        <Text style={styles.label}>Data</Text>
                         <InputData/>
+
+                        <Text style={styles.label}>Hora</Text>
                         <InputHora/>
-                        <TextInput style={styles.input} placeholder="Valor (mg/dl)" keyboardType="numeric" />
-                        <TextInput style={styles.input} placeholder="Observação" multiline />
+
+                        <Text style={styles.label}>Valor da glicemia medido (mg/dl)</Text>
+                        <InputNumber />
+
+                        <Text style={styles.label}>Observação</Text>
+                        <TextInput style={styles.input} placeholder="Ex: Vitamina de banana e maçã" multiline />
                     </View>
 
                     <View style={styles.buttonsGroup}>

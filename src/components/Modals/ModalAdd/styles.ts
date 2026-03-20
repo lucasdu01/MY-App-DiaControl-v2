@@ -36,7 +36,12 @@ export const styles = StyleSheet.create({
    },
    inputsGroup: {
         width: '100%',
-        gap: 20,
+        gap:10,
+   },
+   label: {
+     fontSize: 16,
+     marginTop: 10,
+
    },
    input: {
         height: 40,
