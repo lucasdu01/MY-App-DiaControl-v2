@@ -3,7 +3,6 @@ import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView, Moda
 import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
 import { ButtonAdd  } from "@/components/Buttons/ButtonAdd";
-import { useGlicemiaModals } from "@/hooks/hooks";
 
 // tipagem do item de glicemia
 export interface GlicemiaItem {
