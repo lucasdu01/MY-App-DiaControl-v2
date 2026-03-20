@@ -14,7 +14,7 @@ export function FormRegistro( {closeModal, handleCreate} : Props) {
         <View style={styles.overlay}>
             <View style={styles.container}>
                 <View style={styles.headerForm}>
-                    <Text style={styles.title}>Registrar Glicemia</Text>
+                    <Text style={styles.title}>Adicionar Registro</Text>
                     <TouchableOpacity onPress={() => closeModal()}>
                         <MaterialIcons name="close" size={32} style={styles.closeButton} />
                     </TouchableOpacity>

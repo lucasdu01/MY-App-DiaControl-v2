@@ -1,8 +1,10 @@
-import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView  } from "react-native";
+import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView, Modal  } from "react-native";
 
 import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
 import { ButtonAdd  } from "../ButtonAdd.tsx";
+import { useState } from "react";
+import { ModalDelete } from "../ModalDelete";
 
 // tipagem do item de glicemia
 export interface GlicemiaItem {
@@ -17,14 +19,16 @@ export interface GlicemiaItem {
 type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
-	openModal: () => void;
+	openModalAdd: () => void;
 	handleCreate?: (item: GlicemiaItem) => void;
 	handleEdit?: (item: GlicemiaItem) => void;
   	handleDelete?: (item: GlicemiaItem) => void;
 }
 
+
 // Componente de tabela para exibir os registros de glicemia
-export function Table({ data, emptyMessage, openModal, handleCreate, handleEdit, handleDelete}: Props){
+export function Table({ data, emptyMessage, openModalAdd, handleCreate, handleEdit, handleDelete}: Props){
+	const [modalDeleteVisible, setModalDeleteVisible] = useState(false);	// estado para controlar a visibilidade do modal de confirmação de exclusão
 	return(
 		<>
 			<View style={styles.table}>
@@ -42,11 +46,24 @@ export function Table({ data, emptyMessage, openModal, handleCreate, handleEdit,
 							item={item}
 							onEdit={handleEdit}
 							onDelete={handleDelete}
+							openModalDelete={() => setModalDeleteVisible(true)}
 						/>
 					))}
 				</ScrollView>
 			</View>
-			<ButtonAdd openModal={openModal}/>
+			<ButtonAdd 	onPress={openModalAdd}/>
+
+			<Modal
+				animationType='fade'
+				transparent={true}
+				visible={modalDeleteVisible}
+				onRequestClose={() => setModalDeleteVisible(false)}
+			>
+					<ModalDelete
+						handleDelete={handleDelete}			// handleCreate é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser criar um novo registro de glicemia 
+						closeModal={() => setModalDeleteVisible(false)}
+				/>
+			</Modal>
 		</>
     )
 }
@@ -67,10 +84,11 @@ interface TableRowProps {
 	item: GlicemiaItem;
 	onEdit: (item: GlicemiaItem) => void;		// onEdit é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para editar um registro de glicemia.
 	onDelete: (item: GlicemiaItem) => void;		// onDelete é uma função que recebe um item do tipo GlicemiaItem e retorna void. Essa função será chamada quando o usuário clicar no botão para excluir um registro de glicemia.
+	openModalDelete: () => void;				// openModalDelete é uma função que retorna void. Essa função será chamada para abrir o modal de confirmação de exclusão quando o usuário clicar no botão para excluir um registro de glicemia.
 }
 
 // Componente para renderizar cada linha da tabela, representando um registro de glicemia
-const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
+const TableRow = ({ item, onEdit, openModalDelete, onDelete}: TableRowProps) => (
 	<View style={styles.tableRow}>
 		{ /* Cada célula da linha exibe um campo do item de glicemia, como data, hora, valor e observação. O estilo das células é definido pelo arquivo styles.ts. */ }
 		<View style={styles.cell}>
@@ -96,7 +114,7 @@ const TableRow = ({ item, onEdit, onDelete}: TableRowProps) => (
 					<MaterialIcons name="edit" size={20} color="#F4B400"/>
 				</TouchableOpacity>
 
-				<TouchableOpacity onPress={() => onDelete?.(item)}>
+				<TouchableOpacity onPress={() => openModalDelete()}>
 					<MaterialIcons name="delete" size={20} color="#E53935"/>
 				</TouchableOpacity>	
 			</View>

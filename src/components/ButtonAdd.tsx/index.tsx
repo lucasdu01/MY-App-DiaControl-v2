@@ -5,14 +5,14 @@ import { GlicemiaItem } from "../Table"
 
 // tipagem das props do componente Button
 type Props = {
-    openModal: () => void;		// função que será chamada quando o botão for pressionado para abrir o modal de registro de glicemia
+    onPress: () => void;		// função que será chamada quando o botão for pressionado para abrir o modal de registro de glicemia
 }
 
 // Componente de botão para adicionar um novo registro de glicemia
-export function ButtonAdd({ openModal }: Props){
+export function ButtonAdd({ onPress }: Props){
 	return(
 		<View style={ styles.container}>
-			<TouchableOpacity style={styles.buttonAdd} onPress={() => openModal()}>
+			<TouchableOpacity style={styles.buttonAdd} onPress={onPress}>
 				<MaterialIcons name="add-circle" color="#FFFFFF" size={32}/>
 				<Text style={styles.label}>Adicionar Registro</Text>
 			</TouchableOpacity>

@@ -52,7 +52,7 @@ export default function Glicemia(){
 			<Card title="Ao Acordar" hasTable>
 				<Table
 					data={dadosFicticios}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
-					openModal={() => setModalVisible(true)}
+					openModalAdd={() => setModalVisible(true)}
 					handleEdit={handleEdit}				// handleEdit é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser editar um registro existente
 					handleDelete={handleDelete}			// handleDelete é uma função passada como prop para o componente Table, que será chamada quando o usuário quiser excluir um registro
 				/>
