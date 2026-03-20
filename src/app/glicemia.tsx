@@ -1,10 +1,10 @@
 import { Card } from "@/components/Card"
 import { Text, ScrollView, Modal } from "react-native"
 import { Table, GlicemiaItem } from "../components/Table";
-import { useGlicemiaModals } from "@/features/glicemia/hooks/hooks";
-import { ModalAdd } from "@/features/glicemia/modals/ModalAdd";
+import { useGlicemiaModals } from "@/hooks/hooks";
+import { ModalAdd } from "@/components/Modals/ModalAdd";
 //import { ModalEdit } from "@/features/glicemia/modals/ModalEdit";
-import { ModalDelete } from "@/features/glicemia/modals/ModalDelete";
+import { ModalDelete } from "@/components/Modals/ModalDelete";
 
 const dadosFicticios: GlicemiaItem[] = [
   { id: "1", data: "10/02/26", hora: "08:00", valor: 95, observacao: "Em jejum" },
