@@ -35,5 +35,12 @@ export const styles = StyleSheet.create({
       fontSize: 16,
       color: '#333',
     },
+       input: {
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+   },
 
   });

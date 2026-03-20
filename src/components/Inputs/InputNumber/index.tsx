@@ -2,7 +2,11 @@ import { View, TextInput, Text } from 'react-native'
 import { useState } from 'react'
 import { styles } from './styles'
 
-export function InputNumber() {
+type Props = {
+    editable?: boolean; // Propriedade opcional para desabilitar o campo
+}
+
+export function InputNumber( { editable = true}: Props) {
     const [value, setValue] = useState('')
 
     const formatValue = (text: string) => {
@@ -25,6 +29,7 @@ export function InputNumber() {
             onChangeText={formatValue}
             keyboardType="number-pad"
             maxLength={8}
+            editable={editable}
         />
     )
 }

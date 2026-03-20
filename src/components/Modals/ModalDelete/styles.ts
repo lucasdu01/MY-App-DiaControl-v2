@@ -36,19 +36,27 @@ export const styles = StyleSheet.create({
      txtMsgConfirmDelete: {
           fontSize: 18,
           marginBottom: 20,
-     },
-     input: {
-          width: '100%',
-          height: 40,
-          borderColor: '#ccc',
-          borderWidth: 1,
-          borderRadius: 5,
-          padding: 10,
-          marginBottom: 15,
-     },
-     buttonsGroup: {
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          width: '100%',
-     },
+     },   inputsGroup: {
+        width: '100%',
+        gap:10,
+   },
+   label: {
+     fontSize: 16,
+     marginTop: 10,
+
+   },
+   input: {
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+   },
+   buttonsGroup: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        width: '100%',
+        marginTop: 20,
+   },
 });

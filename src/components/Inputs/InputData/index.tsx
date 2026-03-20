@@ -2,7 +2,11 @@ import { View, TextInput, Text } from 'react-native'
 import { useState } from 'react'
 import { styles } from './styles'
 
-export function InputData() {
+type Props = {
+    editable?: boolean; // Propriedade opcional para desabilitar o campo
+}
+
+export function InputData( {editable = true}: Props) {
     const [date, setDate] = useState('')
 
     const formatDate = (text: string) => {
@@ -30,12 +34,13 @@ export function InputData() {
 
     return (
         <TextInput 
-            style={styles.input} 
-            placeholder="DD/MM/AA" 
-            value={date}
-            onChangeText={formatDate}
-            keyboardType="number-pad"
-            maxLength={8}
+            style={styles.input}   
+            placeholder="DD/MM/AA"      // Placeholder para o formato de data
+            value={date}        // Define o valor do campo como o estado 'date'
+            onChangeText={formatDate}       // Formata a data enquanto o usuário digita
+            keyboardType="number-pad" // Abre o teclado numérico
+            maxLength={8}       // Limita a entrada a 8 caracteres (DDMMYY)
+            editable={editable} // Define se o campo é editável ou não, com valor padrão como true (editável)
         />
     )
 }

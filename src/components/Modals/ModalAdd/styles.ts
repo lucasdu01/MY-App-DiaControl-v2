@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
    },
    buttonsGroup: {
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-evenly',
         width: '100%',
    },

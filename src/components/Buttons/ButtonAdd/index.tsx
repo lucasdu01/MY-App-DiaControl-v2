@@ -1,7 +1,6 @@
 import { View, TouchableOpacity, Text } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 import { styles } from "./styles"
-import { GlicemiaItem } from "../Table"
 
 // tipagem das props do componente Button
 type Props = {

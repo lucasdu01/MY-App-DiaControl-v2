@@ -2,6 +2,14 @@ import { View, Text, Button, TouchableOpacity, TextInput, Modal } from 'react-na
 import { styles } from './styles'
 import { MaterialIcons } from '@expo/vector-icons'
 
+import { SelectPeriodo } from '../../Inputs/SelectPeriodo'
+import { InputData } from '../../Inputs/InputData'
+import { InputHora } from '../../Inputs/InputHora'
+import { InputNumber } from '../../Inputs/InputNumber'
+import { ButtonSave } from '../../Buttons/ButtonSave'
+import { ButtonCancel } from '../../Buttons/ButtonCancel'
+import { ButtonDelete } from '@/components/Buttons/ButtonDelete'
+
 type Props = {
     modalDeleteVisible: boolean;	// estado que controla a visibilidade do modal de confirmação de exclusão
     closeModalDelete: () => void;		// função que será chamada para fechar o modal de confirmação de exclusão
@@ -26,15 +34,26 @@ export function ModalDelete({ modalDeleteVisible, closeModalDelete } : Props) {
 
                     <Text style={styles.txtMsgConfirmDelete}>Tem certeza que deseja remover este registro? </Text>
 
-                    <TextInput style={styles.input} placeholder="Período" editable={false} />
-                    <TextInput style={styles.input} placeholder="Data" editable={false} />
-                    <TextInput style={styles.input} placeholder="Hora" editable={false} />
-                    <TextInput style={styles.input} placeholder="Valor (mg/dl)" keyboardType="numeric" editable={false} />
-                    <TextInput style={styles.input} placeholder="Observação" multiline editable={false} />
+                    <View style={styles.inputsGroup}>
+                        <Text style={styles.label}>Periodo</Text>
+                        <SelectPeriodo editable={false}/>
+
+                        <Text style={styles.label}>Data</Text>
+                        <InputData editable={false}/>
+
+                        <Text style={styles.label}>Hora</Text>
+                        <InputHora editable={false}/>
+
+                        <Text style={styles.label}>Valor da glicemia medido (mg/dl)</Text>
+                        <InputNumber editable={false} />
+
+                        <Text style={styles.label}>Observação</Text>
+                        <TextInput style={styles.input} placeholder="Ex: Vitamina de banana e maçã" multiline editable={false}  />
+                    </View>
 
                     <View style={styles.buttonsGroup}>
-                        <Button title="Remover" onPress={() => {}} />
-                        <Button title="Cancelar" onPress={() => closeModalDelete()} />
+                        <ButtonDelete />
+                        <ButtonCancel onPress={() => closeModalDelete()}/>
                     </View>
                 </View>
             </View>

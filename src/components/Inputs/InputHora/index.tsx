@@ -2,7 +2,11 @@ import { View, TextInput, Text } from 'react-native'
 import { useState } from 'react'
 import { styles } from './styles'
 
-export function InputHora() {
+type Props = {
+    editable?: boolean; // Propriedade opcional para desabilitar o campo
+}
+
+export function InputHora( { editable = true}: Props) {
     const [time, setTime] = useState('')
 
     const formatTime = (text: string) => {
@@ -51,6 +55,7 @@ export function InputHora() {
                 onChangeText={formatTime}
                 keyboardType="number-pad"
                 maxLength={5}
+                editable={editable}
             />
         </View>
     )

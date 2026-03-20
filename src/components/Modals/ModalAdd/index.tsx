@@ -6,6 +6,8 @@ import { SelectPeriodo } from '@/components/Inputs/SelectPeriodo'
 import { InputData } from '@/components/Inputs/InputData'
 import { InputHora } from '@/components/Inputs/InputHora'
 import { InputNumber } from '@/components/Inputs/InputNumber'
+import { ButtonSave } from '@/components/Buttons/ButtonSave'
+import { ButtonCancel } from '@/components/Buttons/ButtonCancel'
 
 
 type Props = {
@@ -51,8 +53,8 @@ export function ModalAdd( {modalAddVisible, closeModalAdd} : Props) {
                     </View>
 
                     <View style={styles.buttonsGroup}>
-                        <Button title="Salvar" onPress={() => {}} />
-                        <Button title="Cancelar" onPress={() => closeModalAdd()} />
+                        <ButtonSave />
+                        <ButtonCancel onPress={() => closeModalAdd()}/>
                     </View>
                 </View>
             </View>
