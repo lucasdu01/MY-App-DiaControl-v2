@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 10,
         padding: 20,
+        gap: 20,
    },
    headerForm: {
         flexDirection: 'row',
@@ -33,14 +34,16 @@ export const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
    },
-   input: {
+   inputsGroup: {
         width: '100%',
+        gap: 20,
+   },
+   input: {
         height: 40,
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        marginBottom: 15,
    },
    buttonsGroup: {
         flexDirection: 'row',
