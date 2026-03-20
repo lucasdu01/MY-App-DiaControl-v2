@@ -2,7 +2,7 @@ import { FlatList, FlatListProps, Text, TouchableOpacity, View, ScrollView  } fr
 
 import { styles } from "./styles"
 import { MaterialIcons } from "@expo/vector-icons";
-import { Button } from "../ButtonAdd.tsx";
+import { ButtonAdd  } from "../ButtonAdd.tsx";
 
 // tipagem do item de glicemia
 export interface GlicemiaItem {
@@ -17,13 +17,14 @@ export interface GlicemiaItem {
 type Props = {
 	data: GlicemiaItem[];
 	emptyMessage?: string;
+	openModal: () => void;
 	handleCreate?: (item: GlicemiaItem) => void;
 	handleEdit?: (item: GlicemiaItem) => void;
   	handleDelete?: (item: GlicemiaItem) => void;
 }
 
 // Componente de tabela para exibir os registros de glicemia
-export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDelete}: Props){
+export function Table({ data, emptyMessage, openModal, handleCreate, handleEdit, handleDelete}: Props){
 	return(
 		<>
 			<View style={styles.table}>
@@ -45,7 +46,7 @@ export function Table({ data, emptyMessage, handleCreate, handleEdit, handleDele
 					))}
 				</ScrollView>
 			</View>
-			<Button onCreate={handleCreate}/>
+			<ButtonAdd openModal={openModal}/>
 		</>
     )
 }
