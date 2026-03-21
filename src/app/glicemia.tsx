@@ -1,31 +1,45 @@
 import { Card } from "@/components/Card"
-import { Text, ScrollView, Modal } from "react-native"
+import { Text, ScrollView, Modal, Alert } from "react-native"
 import { Table, GlicemiaItem } from "../components/Table";
 import { useGlicemiaModals } from "@/hooks/hooks";
 import { ModalAdd } from "@/components/Modals/ModalAdd";
 import { ModalEdit } from "@/components/Modals/ModalEdit";
 import { ModalDelete } from "@/components/Modals/ModalDelete";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 
-const dadosFicticios: GlicemiaItem[] = [
-  { id: "1", data: "10/02/26", hora: "08:00", valor: 95, observacao: "Em jejum" },
-  { id: "2", data: "10/02/26", hora: "12:30", valor: 140 },
-  { id: "3", data: "10/02/26", hora: "19:00", valor: 110 },
-  { id: "4", data: "11/02/26", hora: "07:45", valor: 88 },
-  { id: "5", data: "11/02/26", hora: "13:00", valor: 165, observacao: "Após almoço" },
-];
+import { useDiaControlDatabase } from "@/database/useDiaControlDatabase";
 
 // Componente principal da tela de glicemia
 export default function Glicemia(){
 	const { modalAddVisible, openModalAdd, closeModalAdd } = useGlicemiaModals();
 	const { modalEditVisible, openModalEdit, closeModalEdit } = useGlicemiaModals();
 	const { modalDeleteVisible, openModalDelete, closeModalDelete } = useGlicemiaModals();
+	const [registros, setRegistros] = useState<GlicemiaItem[]>([]);	// Estado para armazenar os registros de glicemia obtidos do banco de dados, inicializado como um array vazio
 
+	const diacontrolDatabase = useDiaControlDatabase();	// Usa o hook personalizado useDiaControlDatabase para acessar as funções de manipulação do banco de dados relacionadas ao controle diário de glicemia
+
+	async function fetchRegistros() {
+		try{
+			const response = await diacontrolDatabase.listByData();	// Chama a função listByData do hook useDiaControlDatabase para obter os registros de glicemia do banco de dados, ordenados por data e hora
+			console.log("Registros de glicemia:", response);	// Exibe os registros de glicemia obtidos do banco de dados no console para verificação
+			setRegistros(response);	// Atualiza o estado do componente com os registros obtidos
+		} catch (error) {
+			Alert.alert("Erro", "Ocorreu um erro ao buscar os registros de glicemia. Por favor, tente novamente.");	// Exibe um alerta para o usuário caso haja algum erro ao buscar os registros de glicemia do banco de dados
+			console.log(error);
+		}
+	}
+	useFocusEffect(
+  		useCallback(() => {
+    		fetchRegistros();
+  	}, [])
+);
 	return(
 		<>
 			<ScrollView contentContainerStyle={{gap: 15, paddingVertical: 20}}>
 				<Card title="Ao Acordar" hasTable>
 					<Table
-						data={dadosFicticios}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
+						data={registros}				// data é um array de objetos do tipo GlicemiaItem passado como prop para o componente Table, que contém os registros de glicemia a serem exibidos na tabela
 						openModalAdd={openModalAdd}
 						openModalEdit={openModalEdit}
 						openModalDelete={openModalDelete}
@@ -59,7 +73,7 @@ export default function Glicemia(){
 			</ScrollView>
 
 			{/* Renderiza os modais */}
-			<ModalAdd modalAddVisible={modalAddVisible} closeModalAdd={closeModalAdd}/>
+			<ModalAdd modalAddVisible={modalAddVisible} closeModalAdd={closeModalAdd} onSaved={fetchRegistros}/>
 			<ModalEdit modalEditVisible={modalEditVisible} closeModalEdit={closeModalEdit}/> 
 			<ModalDelete modalDeleteVisible={modalDeleteVisible} closeModalDelete={closeModalDelete}/>
 		</>		

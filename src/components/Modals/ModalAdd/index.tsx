@@ -16,9 +16,10 @@ import { useDiaControlDatabase } from '@/database/useDiaControlDatabase'
 type Props = {
     modalAddVisible: boolean;	// estado que controla a visibilidade do modal de registro de glicemia
     closeModalAdd: () => void;		// função que será chamada para fechar o modal de registro de glicemia
+    onSaved: () => void;			// função que será chamada após o salvamento bem-sucedido de um novo registro de glicemia para atualizar a lista de registros exibida na tela
 }
 
-export function ModalAdd( {modalAddVisible, closeModalAdd} : Props) {
+export function ModalAdd( {modalAddVisible, closeModalAdd, onSaved} : Props) {
     const [isProcessing, setIsProcessing] = useState(false);	// estado para controlar se o processo de salvamento está em andamento
 
     const { periodo, setPeriodo,
@@ -39,8 +40,10 @@ export function ModalAdd( {modalAddVisible, closeModalAdd} : Props) {
 
         setIsProcessing(true);	// Define o estado de processamento como verdadeiro para indicar que o processo de salvamento está em andamento
         createRegistro();		// Chama a função para criar o registro de glicemia
+        onSaved();				// Chama a função onSaved para atualizar a lista de registros
         setIsProcessing(false);    // Define o estado de processamento como falso após a tentativa de criação do registro
         closeModalAdd();		// Fecha o modal de registro de glicemia
+        limparFormulario();		// Limpa os campos do formulário para a próxima entrada de dados, garantindo que o formulário esteja vazio quando o modal for aberto novamente para adicionar um novo registro de glicemia
     }
 
     async function createRegistro() {

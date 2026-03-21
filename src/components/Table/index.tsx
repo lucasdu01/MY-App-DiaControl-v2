@@ -6,7 +6,8 @@ import { ButtonAdd  } from "@/components/Buttons/ButtonAdd";
 
 // tipagem do item de glicemia
 export interface GlicemiaItem {
-	id: string;
+	id: number;
+	periodo: string;
 	data: string;
 	hora: string;
 	valor: number;
