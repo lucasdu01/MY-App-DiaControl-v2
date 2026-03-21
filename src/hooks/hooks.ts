@@ -27,3 +27,28 @@ export function useGlicemiaModals() {
         modalDeleteVisible, openModalDelete, closeModalDelete
     }
 }
+
+export function useGlicemiaForm() {
+    const [periodo, setPeriodo] = useState('');    // estado para armazenar o valor do período selecionado
+    const [data, setData] = useState('');        // estado para armazenar o valor da data inserida
+    const [hora, setHora] = useState('');        // estado para armazenar o valor da hora inserida
+    const [valor, setValor] = useState('');      // estado para armazenar o valor da glicemia inserida
+    const [observacao, setObservacao] = useState('');  // estado para armazenar o valor da observação inserida
+
+    const limparFormulario = () => {
+        setPeriodo('');
+        setData('');
+        setHora('');
+        setValor('');
+        setObservacao('');
+    }
+
+    return {
+        periodo, setPeriodo,
+        data, setData,
+        hora, setHora,
+        valor, setValor,
+        observacao, setObservacao,
+        limparFormulario
+    }
+}

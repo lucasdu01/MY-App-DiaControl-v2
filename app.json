@@ -5,19 +5,20 @@
     "scheme": "diacontrol",
     "version": "2.0.0",
     "plugins": [
-		"expo-router"
+      "expo-router",
+      "expo-sqlite"
     ],
     "android": {
-		"edgeToEdgeEnabled": true,
-    	"package": "com.lucasdu.diacontrol",
-		"adaptiveIcon": {
-			"foregroundImage": "./assets/adaptive-icon.png",
-			"backgroundColor": "#FFFFFF"
-		}
+      "edgeToEdgeEnabled": true,
+      "package": "com.lucasdu.diacontrol",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
-	"ios": {
-		"bundleIdentifier": "com.lucasdu.diacontrol",
-		"icon": "./assets/ios-light.png"
-	}
+    "ios": {
+      "bundleIdentifier": "com.lucasdu.diacontrol",
+      "icon": "./assets/ios-light.png"
+    }
   }
 }

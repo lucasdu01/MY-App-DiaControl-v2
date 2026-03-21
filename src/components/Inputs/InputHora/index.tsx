@@ -4,17 +4,18 @@ import { styles } from './styles'
 
 type Props = {
     editable?: boolean; // Propriedade opcional para desabilitar o campo
+    hora: string; // Valor da hora para exibir no campo, passado como prop do componente pai
+    setHora: (hora: string) => void; // Função para atualizar o estado da hora no componente pai
 }
 
-export function InputHora( { editable = true}: Props) {
-    const [time, setTime] = useState('')
+export function InputHora( { editable = true, hora, setHora }: Props) {
 
     const formatTime = (text: string) => {
         // Remove tudo que não é número
         let numbers = text.replace(/\D/g, '')
         
         if (numbers.length === 0) {
-            setTime('')
+            setHora('')
             return
         }
 
@@ -43,7 +44,7 @@ export function InputHora( { editable = true}: Props) {
             formatted = `${numbers.slice(0, 2)}:${numbers.slice(2)}`
         } 
 
-        setTime(formatted)
+        setHora(formatted)
     }
 
     return (
@@ -51,11 +52,11 @@ export function InputHora( { editable = true}: Props) {
             <TextInput 
                 style={styles.input} 
                 placeholder="HH:MM" 
-                value={time}
                 onChangeText={formatTime}
                 keyboardType="number-pad"
                 maxLength={5}
                 editable={editable}
+                value={hora}
             />
         </View>
     )
